@@ -1,3 +1,4 @@
+import AuthContext from "./context/AuthContext";
 import ToasterContext from "./context/ToasterContext";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -16,10 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body className={inter.className}>
-        <ToasterContext />
-        {children}
+    <html lang="en">
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <AuthContext>
+          <ToasterContext />
+          {children}
+        </AuthContext>
       </body>
     </html>
   );
