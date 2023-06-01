@@ -5,6 +5,7 @@ import { useState } from "react";
 import DesktopItem from "./DesktopItem";
 import { User } from "@prisma/client";
 import Avatar from "../Avatar";
+import SettingsModal from "./SettingsModal";
 interface DesktopSidebarProps {
   currentUser: User;
 }
@@ -13,8 +14,14 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
   const routes = useRoutes();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div
-      className="hidden
+    <>
+      <SettingsModal
+        currentUser={currentUser}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+      <div
+        className="hidden
   lg:fixed
   lg:inset-y-0
   lg:left-0
@@ -29,54 +36,55 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
   lg:flex-col
   justify-between
   "
-    >
-      <nav
-        className="
+      >
+        <nav
+          className="
       mt-4
       flex
       flex-col
       justify-between
 
       "
-      >
-        <ul
-          role="list"
-          className="
+        >
+          <ul
+            role="list"
+            className="
         flex
         flex-col
         items-center
         space-y-1
         "
-        >
-          {routes.map((item) => (
-            <DesktopItem
-              key={item.lable}
-              href={item.href}
-              lable={item.lable}
-              icon={item.icon}
-              active={item.active}
-              onClick={item.onClick}
-            />
-          ))}
-        </ul>
-      </nav>
-      <nav
-        className="
+          >
+            {routes.map((item) => (
+              <DesktopItem
+                key={item.lable}
+                href={item.href}
+                lable={item.lable}
+                icon={item.icon}
+                active={item.active}
+                onClick={item.onClick}
+              />
+            ))}
+          </ul>
+        </nav>
+        <nav
+          className="
       mt-4
       flex
       flex-col
       justify-between
       items-center
       "
-      >
-        <div
-          onClick={() => setIsOpen(true)}
-          className="cursor-pointer hover:opacity-75 transition"
         >
-          <Avatar user={currentUser} />
-        </div>
-      </nav>
-    </div>
+          <div
+            onClick={() => setIsOpen(true)}
+            className="cursor-pointer hover:opacity-75 transition"
+          >
+            <Avatar user={currentUser} />
+          </div>
+        </nav>
+      </div>
+    </>
   );
 };
 
